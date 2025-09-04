@@ -1,434 +1,219 @@
-"use client"
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
+import PROFILE from "../data/profile";
+import { SKILLS } from "../data/skills";
+import { PROJECTS } from "../data/projects";
 
-import type React from "react"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Github, Linkedin, Mail, Download, ExternalLink, Menu, X, ChevronRight } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
-
-const projects = [
-  {
-    id: 1,
-    title: "AI-Powered Analytics Dashboard",
-    description:
-      "Real-time business intelligence platform using machine learning for predictive analytics and automated insights.",
-    tags: ["Python", "TensorFlow", "React", "AWS"],
-    github: "https://github.com",
-    featured: true,
-    thumbnail: "/analytics-dashboard.png",
-  },
-  {
-    id: 2,
-    title: "YOLOv12 Object Detection System",
-    description:
-      "Custom computer vision solution for real-time object detection and tracking in manufacturing environments.",
-    tags: ["Python", "YOLOv12", "OpenCV", "Docker"],
-    github: "https://github.com",
-    featured: true,
-    thumbnail: "/object-detection.jpg",
-  },
-  {
-    id: 3,
-    title: "Cross-Platform Mobile Analytics",
-    description:
-      "React Native application for business analytics with offline capabilities and real-time synchronization.",
-    tags: ["React Native", "Supabase", "TypeScript"],
-    github: "https://github.com",
-    featured: false,
-    thumbnail: "/mobile-analytics.jpg",
-  },
-  {
-    id: 4,
-    title: "Strategic Planning Platform",
-    description: "Web-based tool for business strategy formulation with data visualization and collaborative features.",
-    tags: ["Next.js", "Tailwind", "PostgreSQL"],
-    github: "https://github.com",
-    featured: false,
-    thumbnail: "/strategy-platform.jpg",
-  },
-]
-
-const skills = {
-  technical: [
-    "Python",
-    "SQL",
-    "AWS",
-    "Supabase",
-    "React Native",
-    "YOLOv12",
-    "Tailwind",
-    "TypeScript",
-    "TensorFlow",
-    "Docker",
-  ],
-  business: [
-    "Economics",
-    "Strategy",
-    "Data Visualization",
-    "Business Intelligence",
-    "Market Analysis",
-    "Product Management",
-  ],
-  soft: [
-    "Leadership",
-    "Cross-cultural Collaboration",
-    "Adaptability",
-    "Problem Solving",
-    "Communication",
-    "Team Building",
-  ],
-}
-
-export default function Portfolio() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission
-    console.log("Form submitted:", formData)
-  }
-
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
-    setIsMenuOpen(false)
-  }
+export default function Home() {
+  const featuredProjects = PROJECTS.filter(p => p.featured).slice(0, 4);
+  const otherProjects = PROJECTS.filter(p => !p.featured);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="https://github.com/surosh">
-                  <Github className="w-4 h-4" />
-                </Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="https://linkedin.com/in/surosh">
-                  <Linkedin className="w-4 h-4" />
-                </Link>
-              </Button>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="mailto:surosh@example.com">
-                  <Mail className="w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <button onClick={() => scrollToSection("about")} className="hover:text-primary transition-colors">
-                About
-              </button>
-              <button onClick={() => scrollToSection("projects")} className="hover:text-primary transition-colors">
-                Projects
-              </button>
-              <button onClick={() => scrollToSection("skills")} className="hover:text-primary transition-colors">
-                Skills
-              </button>
-              <Button variant="outline" size="sm" className="ml-4 bg-transparent">
-                <Download className="w-4 h-4 mr-2" />
-                Resume
-              </Button>
-            </nav>
-
-            {/* Mobile Menu Button */}
-            <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+    <div className="min-h-screen bg-black text-white" style={{ backgroundColor: '#000000' }}>
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-neutral-800" style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}>
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
+              <Github className="h-5 w-5" />
+            </a>
+            <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
+              <Linkedin className="h-5 w-5" />
+            </a>
+            <a href={`mailto:${PROFILE.email}`} className="text-neutral-400 hover:text-white transition-colors">
+              <Mail className="h-5 w-5" />
+            </a>
           </div>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <nav className="md:hidden mt-4 pb-4 border-t border-border pt-4">
-              <div className="flex flex-col space-y-4">
-                <button
-                  onClick={() => scrollToSection("about")}
-                  className="text-left hover:text-primary transition-colors"
-                >
-                  About
-                </button>
-                <button
-                  onClick={() => scrollToSection("projects")}
-                  className="text-left hover:text-primary transition-colors"
-                >
-                  Projects
-                </button>
-                <button
-                  onClick={() => scrollToSection("skills")}
-                  className="text-left hover:text-primary transition-colors"
-                >
-                  Skills
-                </button>
-                <Button variant="outline" size="sm" className="w-fit bg-transparent">
-                  <Download className="w-4 h-4 mr-2" />
-                  Resume
-                </Button>
-              </div>
-            </nav>
-          )}
+          <div className="flex items-center space-x-8">
+            <a href="#about" className="text-neutral-300 hover:text-white transition-colors">About</a>
+            <a href="#projects" className="text-neutral-300 hover:text-white transition-colors">Projects</a>
+            <a href="#skills" className="text-neutral-300 hover:text-white transition-colors">Skills</a>
+            <a href={PROFILE.resumeUrl} download="Surosh_Nathaniel_Kumar_Resume.pdf" className="flex items-center space-x-2 text-neutral-300 hover:text-white transition-colors">
+              <Download className="h-4 w-4" />
+              <span>Resume</span>
+            </a>
+          </div>
         </div>
-      </header>
+      </nav>
 
-      {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance">Surosh Nathaniel Kumar</h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            AI/ML • Analytics • Product • Minimalist Design
+      <main className="pt-20">
+        {/* Hero Section - Pure Black Background */}
+        <section className="max-w-6xl mx-auto px-6 py-20 text-center" style={{ backgroundColor: '#000000' }}>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+            {PROFILE.name}
+          </h1>
+          <p className="text-xl text-neutral-400 mb-8 max-w-2xl mx-auto">
+            {PROFILE.tagline}
           </p>
-          <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto text-pretty">
-            Bridging the gap between cutting-edge artificial intelligence and strategic business solutions. I transform
-            complex data into actionable insights that drive growth and innovation.
+          <p className="text-lg text-neutral-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+            {PROFILE.blurb}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" onClick={() => scrollToSection("projects")} className="group">
-              View Projects
-              <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="outline" size="lg">
-              <Download className="w-4 h-4 mr-2" />
-              Download Resume
-            </Button>
+            <a href="#projects" className="inline-flex items-center px-8 py-4 bg-neutral-800 hover:bg-neutral-700 rounded-lg transition-colors">
+              <span>View Projects</span>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
+            <a href={PROFILE.resumeUrl} download="Surosh_Nathaniel_Kumar_Resume.pdf" className="inline-flex items-center px-8 py-4 bg-neutral-800 hover:bg-neutral-700 rounded-lg transition-colors">
+              <Download className="mr-2 h-4 w-4" />
+              <span>Download Resume</span>
+            </a>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 px-4 bg-muted/30">
-        <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">About Me</h2>
+        {/* About Section - Lighter Background */}
+        <section id="about" className="bg-neutral-900 max-w-6xl mx-auto px-6 py-20">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-lg text-muted-foreground mb-6 text-pretty">
-                With a unique blend of technical expertise in AI/ML and strategic business acumen, I specialize in
-                developing intelligent systems that solve real-world problems. My experience spans from building
-                computer vision models to crafting data-driven business strategies.
-              </p>
-              <p className="text-lg text-muted-foreground text-pretty">
-                I thrive in cross-cultural environments and believe in the power of minimalist design and clean code to
-                create impactful solutions. Whether it's implementing YOLOv12 for object detection or analyzing market
-                trends, I bring a holistic approach to every project.
-              </p>
+              <h2 className="text-4xl font-bold mb-6">About Me</h2>
+              <div className="space-y-4 text-neutral-300 leading-relaxed">
+                <p>
+                  I'm a passionate AI/ML engineer and business analyst with expertise in computer vision, 
+                  data-driven strategies, and end-to-end product development. My approach combines technical 
+                  depth with strategic business acumen.
+                </p>
+                <p>
+                  I specialize in building AI products that solve real-world problems, from computer vision 
+                  systems for campus analytics to agentic pipelines for collectibles valuation. My work spans 
+                  the full stack of AI development, from data pipelines to clean front-ends.
+                </p>
+                <p>
+                  When I'm not coding, I enjoy exploring the intersection of technology and business strategy, 
+                  always looking for ways to bridge the gap between cutting-edge AI and practical business solutions.
+                </p>
+              </div>
             </div>
-            <div className="flex justify-center">
-              <div className="w-64 h-64 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+            <div className="relative">
+              <div className="aspect-square relative rounded-2xl overflow-hidden bg-gradient-to-br from-neutral-800 to-neutral-900">
                 <Image
-                  src="/professional-headshot.png"
-                  alt="Surosh Nathaniel Kumar"
-                  width={200}
-                  height={200}
-                  className="rounded-xl"
+                  src="/professional-headshot.jpeg"
+                  alt="Profile picture"
+                  fill
+                  className="object-cover"
                 />
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
+        {/* Featured Projects - Pure Black Background */}
+        <section id="projects" className="max-w-6xl mx-auto px-6 py-20" style={{ backgroundColor: '#000000' }}>
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
-            <p className="text-lg text-muted-foreground">
-              A selection of my recent work in AI/ML and business analytics
-            </p>
+            <h2 className="text-4xl font-bold mb-4">Featured Projects</h2>
+            <p className="text-xl text-neutral-400">A selection of my recent work in AI/ML and business analytics</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {featuredProjects.map((project) => (
+              <div key={project.name} className="bg-neutral-900 rounded-2xl overflow-hidden hover:bg-neutral-800 transition-colors">
+                <div className="aspect-video relative bg-neutral-950">
+                  <Image
+                    src={project.thumb || `/placeholder.jpg`}
+                    alt={project.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
+                  <p className="text-neutral-400 mb-4">{project.blurb}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.tags?.map((tag) => (
+                      <span key={tag} className="px-3 py-1 bg-neutral-800 text-neutral-300 rounded-full text-sm">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    <Github className="mr-2 h-4 w-4" />
+                    View Code
+                    <ArrowRight className="ml-1 h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Featured Projects */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {projects
-              .filter((p) => p.featured)
-              .map((project) => (
-                <Card
-                  key={project.id}
-                  className="group hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1"
-                >
-                  <CardHeader className="p-0">
-                    <div className="relative overflow-hidden rounded-t-lg">
-                      <Image
-                        src={project.thumbnail || "/placeholder.svg"}
-                        alt={project.title}
-                        width={300}
-                        height={200}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <CardTitle className="mb-2 group-hover:text-primary transition-colors">{project.title}</CardTitle>
-                    <CardDescription className="mb-4 text-pretty">{project.description}</CardDescription>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link href={project.github} className="group/link">
-                        <Github className="w-4 h-4 mr-2" />
-                        View Code
-                        <ExternalLink className="w-3 h-3 ml-1 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
+          <div className="text-center">
+            <a href="/projects" className="inline-flex items-center px-6 py-3 bg-neutral-800 hover:bg-neutral-700 rounded-lg transition-colors">
+              View All Projects
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
           </div>
+        </section>
 
-          {/* All Projects Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects
-              .filter((p) => !p.featured)
-              .map((project) => (
-                <Card
-                  key={project.id}
-                  className="group hover:shadow-md hover:shadow-primary/5 transition-all duration-300"
-                >
-                  <CardHeader className="p-0">
-                    <div className="relative overflow-hidden rounded-t-lg">
-                      <Image
-                        src={project.thumbnail || "/placeholder.svg"}
-                        alt={project.title}
-                        width={300}
-                        height={150}
-                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-4">
-                    <CardTitle className="text-lg mb-2 group-hover:text-primary transition-colors">
-                      {project.title}
-                    </CardTitle>
-                    <CardDescription className="text-sm mb-3 text-pretty">{project.description}</CardDescription>
-                    <div className="flex flex-wrap gap-1 mb-3">
-                      {project.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <Button variant="ghost" size="sm" asChild>
-                      <Link href={project.github}>
-                        <Github className="w-3 h-3 mr-2" />
-                        Code
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
+        {/* Skills Section - Lighter Background with Card Layout */}
+        <section id="skills" className="bg-neutral-900 max-w-6xl mx-auto px-6 py-20">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Skills & Expertise</h2>
           </div>
-
-          <div className="text-center mt-12">
-            <Button variant="outline" asChild>
-              <Link href="/projects">
-                View All Projects
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="py-20 px-4 bg-muted/30">
-        <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Skills & Expertise</h2>
+          
           <div className="grid md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl">Technical</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {skills.technical.map((skill) => (
-                    <Badge key={skill} variant="default" className="text-sm">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl">Business & Analytics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {skills.business.map((skill) => (
-                    <Badge key={skill} variant="secondary" className="text-sm">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl">Soft Skills</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {skills.soft.map((skill) => (
-                    <Badge key={skill} variant="outline" className="text-sm">
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-4 border-t border-border bg-muted/30">
-        <div className="container mx-auto max-w-4xl">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="text-center md:text-left">
-              <p className="text-muted-foreground">Built with Next.js, Tailwind, and Vercel</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <Button variant="outline" size="sm">
-                <Download className="w-4 h-4 mr-2" />
-                Resume
-              </Button>
-              <div className="flex gap-2">
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="https://github.com/surosh">
-                    <Github className="w-4 h-4" />
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="https://linkedin.com/in/surosh">
-                    <Linkedin className="w-4 h-4" />
-                  </Link>
-                </Button>
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="mailto:surosh@example.com">
-                    <Mail className="w-4 h-4" />
-                  </Link>
-                </Button>
+            {/* Technical Skills Card */}
+            <div className="bg-neutral-800 rounded-2xl p-6">
+              <h3 className="text-xl font-semibold mb-6 text-white">Technical</h3>
+              <div className="flex flex-wrap gap-3">
+                {SKILLS.technical.map((skill) => (
+                  <span key={skill} className="px-4 py-2 bg-neutral-700 text-white rounded-full text-sm border border-neutral-600">
+                    {skill}
+                  </span>
+                ))}
               </div>
             </div>
+            
+            {/* Business & Analytics Skills Card */}
+            <div className="bg-neutral-800 rounded-2xl p-6">
+              <h3 className="text-xl font-semibold mb-6 text-white">Business & Analytics</h3>
+              <div className="flex flex-wrap gap-3">
+                {SKILLS.analytics.map((skill) => (
+                  <span key={skill} className="px-4 py-2 bg-neutral-700 text-white rounded-full text-sm border border-neutral-600">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+            
+            {/* Soft Skills Card */}
+            <div className="bg-neutral-800 rounded-2xl p-6">
+              <h3 className="text-xl font-semibold mb-6 text-white">Soft Skills</h3>
+              <div className="flex flex-wrap gap-3">
+                {SKILLS.soft.map((skill) => (
+                  <span key={skill} className="px-4 py-2 bg-neutral-700 text-white rounded-full text-sm border border-neutral-600">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-neutral-800 py-8" style={{ backgroundColor: '#000000' }}>
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-neutral-400 text-sm">Built with Next.js, Tailwind, and Vercel</p>
+          <div className="flex items-center space-x-6 mt-4 md:mt-0">
+            <a href={PROFILE.resumeUrl} download="Surosh_Nathaniel_Kumar_Resume.pdf" className="flex items-center space-x-2 text-neutral-400 hover:text-white transition-colors">
+              <Download className="h-4 w-4" />
+              <span>Resume</span>
+            </a>
+            <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
+              <Github className="h-5 w-5" />
+            </a>
+            <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-white transition-colors">
+              <Linkedin className="h-5 w-5" />
+            </a>
+            <a href={`mailto:${PROFILE.email}`} className="text-neutral-400 hover:text-white transition-colors">
+              <Mail className="h-5 w-5" />
+            </a>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
