@@ -1,0 +1,51 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "AI-Powered Analytics Dashboard",
+      "description": "Real-time business intelligence platform using machine learning for predictive analytics and automated insights.",
+      "longDescription": "This comprehensive analytics platform leverages advanced machine learning algorithms to provide real-time business insights. Built with Python and TensorFlow for the ML backend, React for the frontend, and deployed on AWS for scalability.",
+      "tags": ["Python", "TensorFlow", "React", "AWS", "PostgreSQL", "Docker"],
+      "github": "https://github.com",
+      "demo": "https://demo.com",
+      "featured": true,
+      "thumbnail": "/placeholder.svg?height=300&width=400",
+      "category": "AI/ML"
+    },
+    {
+      "id": 2,
+      "title": "YOLOv12 Object Detection System",
+      "description": "Custom computer vision solution for real-time object detection and tracking in manufacturing environments.",
+      "longDescription": "Developed a state-of-the-art object detection system using YOLOv12 for manufacturing quality control. The system processes video streams in real-time and provides automated defect detection with high precision.",
+      "tags": ["Python", "YOLOv12", "OpenCV", "Docker", "CUDA", "TensorRT"],
+      "github": "https://github.com",
+      "featured": true,
+      "thumbnail": "/placeholder.svg?height=300&width=400",
+      "category": "Computer Vision"
+    },
+    {
+      "id": 3,
+      "title": "Cross-Platform Mobile Analytics",
+      "description": "React Native application for business analytics with offline capabilities and real-time synchronization.",
+      "longDescription": "A comprehensive mobile analytics solution built with React Native, featuring offline-first architecture, real-time data synchronization, and customizable dashboard widgets for business intelligence on the go.",
+      "tags": ["React Native", "Supabase", "TypeScript", "Redux", "Expo"],
+      "github": "https://github.com",
+      "demo": "https://demo.com",
+      "featured": false,
+      "thumbnail": "/placeholder.svg?height=300&width=400",
+      "category": "Mobile Development"
+    },
+    {
+      "id": 4,
+      "title": "Strategic Planning Platform",
+      "description": "Web-based tool for business strategy formulation with data visualization and collaborative features.",
+      "longDescription": "A collaborative platform for strategic business planning that combines data visualization, scenario modeling, and team collaboration tools to help organizations make informed strategic decisions.",
+      "tags": ["Next.js", "Tailwind", "PostgreSQL", "D3.js", "WebSockets"],
+      "github": "https://github.com",
+      "demo": "https://demo.com",
+      "featured": false,
+      "thumbnail": "/placeholder.svg?height=300&width=400",
+      "category": "Business Analytics"
+    }
+  ]
+}
